@@ -117,14 +117,42 @@ minimun' (x:xs) | x < ( head' xs ) = minimun' ( x : ( tail' xs ) )
 --22)
 lookup' :: Eq a => a -> [(a,b)] -> Maybe b
 lookup' y [] = Nothing
-lookup' y (x:xs) | y == fst' x = snd' x
-                 | otherwise 
+lookup' y (x:xs) | y == fst' x = Just( snd' x )
+                 | otherwise  = lookup' y xs
                 
---23)                 
-unzip' :: [(a,b)] -> ([a],[b])
-unzip' [] = []
-unzip' (x:xs) = ( fst' x : ys, snd' x : zs ) 
-                where ys = []
-                      zs = []    
-                
+--23)     
+addTupla :: (a,b) -> ([a],[b]) -> ([a],[b])
+addTupla (x,y) ([],[]) = ([x],[y])
+addTupla (x,y) (fs,ss) = ( (x:fs), (y:ss) )  
 
+unzip' :: [(a,b)] -> ([a],[b])
+unzip' [] = ([],[])
+unzip' (x:xs) = addTupla ( fst' x , snd' x ) ( unzip' xs )    
+
+--24)
+tails' :: [a] -> [[a]]
+tails' [] = []
+tails' (x:xs) = xs : ( tails' xs )
+
+--25)
+replicate' :: Int -> a -> [a]
+replicate' 1 x = [x]
+replicate' i x = x : ( replicate' (i-1) x )
+
+--26)
+repeat' :: a -> [a]
+repeat' x = x : repeat' x
+
+--27)
+cycle' :: [a] -> [a]
+cycle' [] = []
+cycle' xs = xs ++ cycle' xs 
+
+--28)
+nats' :: [Int]
+nats' = [1..]
+
+--29)
+agrupar :: Eq a => [a] -> [[a]]
+agrupar [] = []
+agrupar (x:xs)  
