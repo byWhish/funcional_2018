@@ -1,0 +1,27 @@
+2. Tipo a expresiones
+
+1. Dar tipo a las siguientes expresiones y funciones
+
+a) True :: Bool
+b) [2] :: Num a => a
+c) Maybe ["Jorge"] :: no tipa
+d ) Nothing :: Maybe a
+e) [] :: [a]
+f ) let x = [] in x ++ x :: [a] 
+g) let f x = f x in f [] :: a 
+
+h) data Either a b = Left a | Right b
+	x = Left True
+	y = Right (Left [])
+	z = Right (Left [Right []])
+
+i ) (:) :: a -> [a] -> [a]
+
+j ) Maybe
+
+k ) Right :: a -> Either b a
+l ) (1:) :: Num a => a -> [a] 
+m) error "ups" :: a
+n) error :: String a 
+ñ) undefined :: a 
+o) undefined undefined :: a 

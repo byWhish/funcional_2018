@@ -122,7 +122,7 @@ lookup' y (x:xs) | y == fst' x = Just( snd' x )
                 
 --23)     
 addTupla :: (a,b) -> ([a],[b]) -> ([a],[b])
-addTupla (x,y) ([],[]) = ([x],[y])
+--addTupla (x,y) ([],[]) = ([x],[y]) correccion: este caso esta de mas
 addTupla (x,y) (fs,ss) = ( (x:fs), (y:ss) )  
 
 unzip' :: [(a,b)] -> ([a],[b])
@@ -155,4 +155,4 @@ nats' = [1..]
 --29)
 agrupar :: Eq a => [a] -> [[a]]
 agrupar [] = []
-agrupar (x:xs)  
+agrupar (x:y:xs) | x == y =  
