@@ -155,4 +155,4 @@ nats' = [1..]
 --29)
 agrupar :: Eq a => [a] -> [[a]]
 agrupar [] = []
-agrupar (x:y:xs) | x == y =  
+agrupar [x] = [[x]]
