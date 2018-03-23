@@ -15,9 +15,11 @@ h) data Either a b = Left a | Right b
 	y = Right (Left [])
 	z = Right (Left [Right []])
 
+	:: kind
+
 i ) (:) :: a -> [a] -> [a]
 
-j ) Maybe
+j ) Maybe :: Kind
 
 k ) Right :: a -> Either b a
 l ) (1:) :: Num a => a -> [a] 
@@ -25,3 +27,4 @@ m) error "ups" :: a
 n) error :: String a 
 ñ) undefined :: a 
 o) undefined undefined :: a 
+

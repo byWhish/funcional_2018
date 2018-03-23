@@ -35,14 +35,12 @@ product' [] = 1
 product' (x:xs) = x * product' xs
 
 --09)
-elem', noElem'  :: Eq a => a -> [a] -> Bool
+elem' :: Eq a => a -> [a] -> Bool
 elem' x [] = False
-elem' x (y:ys) | x == y = True
-               | otherwise = elem' x ys  
+elem' x (y:ys) = x == y || elem x ys   
 
-noElem' x [] = True
-noElem' x (y:ys) | x == y = False
-                 | otherwise = noElem' x ys
+noElem'  :: Eq a => a -> [a] -> Bool
+noElem' x ys =  not ( elem' x ys )
 
 --10)
 and', or' :: [Bool] -> Bool
@@ -59,14 +57,13 @@ last' (x:xs) = last' xs
 
 --12)
 init' :: [a] ->  [a]
-init' [] = []
 init' [x] = []
 init' (x:xs) = x : init' xs
 
 --13)
 subset' :: Eq a => [a] -> [a] -> Bool
 subset' [] _ = True
-subset' (x:xs) (y:ys) = x == y && subset' xs ys
+subset' (x:xs) (ys) = elem' x ys && subset' xs ys
 
 --14)
 (+++) ::  [a] -> [a] -> [a]
@@ -92,8 +89,9 @@ take' i (x:xs) = x : take' (i-1) xs
 
 --18) consideto que tiro igual o menor cantidad de elementos que la lista
 drop' :: Int -> [a] -> [a]
-drop' 1 (x:xs) = xs
-drop' i (x:xs) = drop' (i-1) xs
+drop' 0 xs = xs
+drop' n [] = []
+drop' n (x:xs) = drop' (n-1) xs
 
 --19) asumo listas de igual cantidad de elementos
 zip' :: [a] -> [b] -> [(a,b)]
@@ -102,17 +100,18 @@ zip' (x:xs) (y:ys) = (x,y) : zip' xs ys
 
 --20) asumo minimo 2 elementos
 splitAt' :: Int -> [a] -> ([a],[a])
-splitAt' i xs = ( take i xs, drop i xs)
+splitAt' 0 xs = ([],xs)
+splitAt' _ [] = ([],[])
+splitAt' n (x:xs) = ( x:ys, zs)
+                where ( ys, zs ) = splitAt' (n-1) xs
 
 --21) asumo minimo un elemento 
 maximun', minimun' :: Ord a => [a] -> a
 maximun' [x] = x 
-maximun' (x:xs) | x > ( head' xs ) = maximun' ( x : ( tail' xs ) )
-                | otherwise = maximun' xs
+maximun' (x:xs) = max x ( maximun' xs )
 
 minimun' [x] = x 
-minimun' (x:xs) | x < ( head' xs ) = minimun' ( x : ( tail' xs ) )
-                | otherwise = minimun' xs  
+minimun' (x:xs) = min x ( maximun' xs ) 
 
 --22)
 lookup' :: Eq a => a -> [(a,b)] -> Maybe b
@@ -120,19 +119,14 @@ lookup' y [] = Nothing
 lookup' y (x:xs) | y == fst' x = Just( snd' x )
                  | otherwise  = lookup' y xs
                 
---23)     
-addTupla :: (a,b) -> ([a],[b]) -> ([a],[b])
---addTupla (x,y) ([],[]) = ([x],[y]) correccion: este caso esta de mas
-addTupla (x,y) (fs,ss) = ( (x:fs), (y:ss) )  
-
+--23)       
 unzip' :: [(a,b)] -> ([a],[b])
-unzip' [] = ([],[])
-unzip' (x:xs) = addTupla ( fst' x , snd' x ) ( unzip' xs )    
+unzip' [] = ([],[])    
 
 --24)
 tails' :: [a] -> [[a]]
 tails' [] = []
-tails' (x:xs) = xs : ( tails' xs )
+tails' (x:xs) = (x:xs) : ( tails' xs )
 
 --25)
 replicate' :: Int -> a -> [a]
